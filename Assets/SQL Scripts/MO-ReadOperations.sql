@@ -58,8 +58,22 @@ FROM (SELECT raid_events.clanID as raid_clan, SUM(raid_player.damage) AS total_d
 INNER JOIN clan
 ON clan.clanID = total_damage_list.raid_clan;
 
-# aggregate
+# get total messages sent by each player
+SELECT player.username, players_list.total_messages
+FROM (SELECT chat.playerID, COUNT(chat.message) AS total_messages
+	  FROM chat GROUP BY chat.playerID) players_list
+INNER JOIN player ON player.playerID = players_list.playerID;
 
-# subquery
+# get all titan slayers in clan
+SELECT player.clanID, COUNT(player.title) as titan_slayers
+FROM player 
+WHERE player.title = 'Titan Slayer' AND
+player.clanID IN (SELECT clan.clanID FROM clan)
+GROUP BY player.clanID;
 
-# subquery
+# get the player with highest dps from each raid
+SELECT player.username, score1.damage
+FROM player INNER JOIN raid_score AS score1
+WHERE player.playerID = score1.playerID
+AND score1.damage >= ALL 
+	(SELECT score2.damage FROM raid_score AS score2);

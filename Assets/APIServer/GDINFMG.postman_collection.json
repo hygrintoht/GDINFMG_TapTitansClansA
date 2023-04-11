@@ -1,0 +1,133 @@
+{
+	"info": {
+		"_postman_id": "3fb36e57-2e13-4104-8eaa-9590d4de9814",
+		"name": "GDINFMG",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "23640899"
+	},
+	"item": [
+		{
+			"name": "GET Colleges",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:3000/college",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"college"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GET Colleges w/ Limit",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:3000/college?limit=2",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"college"
+					],
+					"query": [
+						{
+							"key": "limit",
+							"value": "2"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create College",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"name\": \"Malayan Colleges Laguna\",\r\n    \"city\": \"Cabuyao\",\r\n    \"enrollment\": 10000\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:3000/college",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"college"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update College",
+			"request": {
+				"method": "PATCH",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"name\": \"Malayan Colleges Laguna\",\r\n    \"updateVals\": {\r\n        \"cName\": \"MCL\",\r\n        \"enrollment\": 15000\r\n    }\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:3000/college",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"college"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete College",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"name\": \"MCL\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:3000/college",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"college"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

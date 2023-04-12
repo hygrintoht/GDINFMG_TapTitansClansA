@@ -1,3 +1,5 @@
+DROP SCHEMA IF EXISTS taptitans_database;
+
 CREATE SCHEMA IF NOT EXISTS taptitans_database;
 
 USE taptitans_database;
@@ -43,7 +45,7 @@ CREATE TABLE IF NOT EXISTS player (
         ON DELETE SET NULL
 );
 
-CREATE TABLE IF NOT EXISTS clan_leaders (
+CREATE TABLE IF NOT EXISTS clan_leader (
 	clanID int NOT NULL,
     playerID int NOT NULL,
     is_grandmaster bool NOT NULL DEFAULT true,
@@ -54,7 +56,7 @@ CREATE TABLE IF NOT EXISTS clan_leaders (
 		REFERENCES player(playerID)
 );
 
-CREATE TABLE IF NOT EXISTS clan_raid_events (
+CREATE TABLE IF NOT EXISTS clan_raid_event (
 	raidID int NOT NULL AUTO_INCREMENT,
     titan_name VARCHAR(30) NOT NULL,
     clanID int NOT NULL,
@@ -63,7 +65,7 @@ CREATE TABLE IF NOT EXISTS clan_raid_events (
 		REFERENCES clan(clanID)
 );
 
-CREATE TABLE IF NOT EXISTS raid_score(
+CREATE TABLE IF NOT EXISTS raid_score (
 	raidID int NOT NULL,
     playerID int NOT NULL,
     attacks int NOT NULL DEFAULT 0,
@@ -72,7 +74,7 @@ CREATE TABLE IF NOT EXISTS raid_score(
     CONSTRAINT `FK_playerID_in_score_key` FOREIGN KEY (playerID)
 		REFERENCES player(playerID),
     CONSTRAINT `FK_raidID_in_score_key` FOREIGN KEY (raidID)
-		REFERENCES clan_raid_events(raidID)
+		REFERENCES clan_raid_event(raidID)
 );
 
 CREATE TABLE IF NOT EXISTS chat (

@@ -11,7 +11,7 @@ DROP TABLE IF EXISTS clan;
 
 CREATE TABLE IF NOT EXISTS clan (
 	clanID int NOT NULL AUTO_INCREMENT,
-    clan_invite_code CHAR(6) NOT NULL,
+    clan_invite_code int NOT NULL DEFAULT (rand() * 10000),
     clan_name VARCHAR(60) NOT NULL,
     num_raids_completed int NOT NULL DEFAULT 0,
     num_clan_morale int NOT NULL DEFAULT 0,

@@ -26,16 +26,18 @@ function getRaid_EventRaid_Score(raidID, callback){
     let stmt = 'SELECT * FROM raid_score WHERE raidID = ?';
     pool.execute(stmt, [raidID], callback);
 }
+/*
     // get total damage of all scores within a raid event from a raid id
 function getRaid_EventTotalDamage(raidID, callback){
     let stmt = 'SELECT SUM(damage) FROM raid_score WHERE raidID = ?';
     pool.execute(stmt, [raidID], callback);
 }
+*/
 // update (not needed)
 // delete (not needed)
 module.exports = {
     Raid_Score,
     createRaid_Score,
     getRaid_Score,
-    getRaid_EventTotalDamage
+    getRaid_EventRaid_Score
 };

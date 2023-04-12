@@ -16,7 +16,7 @@ function createClan_Leaders(clan_leaders, callback)
 }
 // read
     // gets clan leaders based on clan id
-function getClan_Leaders(clanID, callback){
+function getClan_LeadersInClan(clanID, callback){
     let stmt = 'SELECT * FROM clan_leader WHERE clanID = ?';
     pool.execute(stmt, [clanID], callback); 
 }
@@ -30,6 +30,6 @@ function deleteClan_Leaders(playerID, callback){
 module.exports = {
     Clan_Leaders,
     createClan_Leaders,
-    getClan_Leaders,
+    getClan_LeadersInClan,
     deleteClan_Leaders
 };

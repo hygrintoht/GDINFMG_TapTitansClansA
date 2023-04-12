@@ -41,7 +41,7 @@ function updateClan(clanID, update_clan, callback) {
     }
     // removes the last semicolon from the string
     stmt = stmt.substring(0, stmt.length-1); 
-    stmt += `WHERE clanID = ?`;
+    stmt += ` WHERE clanID = ?`;
     update_fields.push(clanID);
     pool.execute(stmt, update_fields, callback);
 }

@@ -34,7 +34,7 @@ function getPlayerID(name, callback){
 }
 // update
     // general update function
-function updatePlayer(id, update_player, callback) {
+function updatePlayer(playerID, update_player, callback) {
     let stmt = `UPDATE player SET `;
     // store the fields to update in an array, so that the list of fields are in order
     let update_fields = [];
@@ -46,13 +46,13 @@ function updatePlayer(id, update_player, callback) {
     // removes the last semicolon from the string
     stmt = stmt.substring(0, stmt.length-1); 
     stmt += ` WHERE playerID = ?`;
-    update_fields.push(id);
+    update_fields.push(playerID);
     pool.execute(stmt, update_fields, callback);
 }
 // delete
-function deletePlayer(id, callback){
+function deletePlayer(playerID, callback){
     let stmt = 'DELETE FROM player WHERE playerID = ?';
-    pool.execute(stmt, [id], callback);
+    pool.execute(stmt, [playerID], callback);
 }
 
 module.exports = {

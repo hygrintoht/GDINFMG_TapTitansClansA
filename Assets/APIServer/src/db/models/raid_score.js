@@ -1,10 +1,10 @@
 const pool = require("../db.js");
 
 class Raid_Score{
-    constructor (id, player, attacks, damage)
+    constructor (raidId, playerID, attacks, damage)
     {
-        this.id = id;
-        this.player = player;
+        this.raidId = raidId;
+        this.playerID = playerID;
         this.attacks = attacks;
         this.damage = damage;
     }
@@ -13,7 +13,7 @@ class Raid_Score{
 // create
 function createRaid_Score(raid_score, callback){
     let stmt = 'INSERT INTO raid_score (raidID, playerID, attacks, damage) VALUES (?,?,?,?)';
-    pool.execute(stmt, [raid_score.id, raid_score.player, raid_score.attacks, raid_score.damage], callback);
+    pool.execute(stmt, [raid_score.raidId, raid_score.playerID, raid_score.attacks, raid_score.damage], callback);
 }
 // read
     // get list of all raid scores

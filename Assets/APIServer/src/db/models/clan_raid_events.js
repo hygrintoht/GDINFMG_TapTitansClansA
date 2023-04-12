@@ -14,7 +14,7 @@ function createClan_Raid_Event(clan_raid_events, callback){
 }
 // read
     // get all clan raid events
-function getClan_Raid_Events(){
+function getClan_Raid_Events(callback){
     let stmt = 'SELECT * FROM clan_raid_events';
     pool.query(stmt, [], callback);
 }

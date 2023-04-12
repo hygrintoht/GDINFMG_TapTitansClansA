@@ -1,3 +1,4 @@
+// @ts-check
 // note: changed
 const express = require("express");
 //const college = require("../db/models/college.js");
@@ -30,7 +31,7 @@ router.get("/", function (req, res) {
 router.post("/chat", (req, res) => {
 
     const {clanID, playerID, message, messageDateTime, messageType} = req.body;
-    const newChat = new chat.createChat(clanID, playerID, message, messageDateTime, messageType);
+    const newChat = new chat.Chat(clanID, playerID, message, messageDateTime, messageType);
 
     chat.createChat(newChat, (err, results) => {
         if (err) {

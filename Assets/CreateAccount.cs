@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class CreateAccount : MonoBehaviour
 {
@@ -15,7 +16,7 @@ public class CreateAccount : MonoBehaviour
     };
 
     [SerializeField] private TextMeshProUGUI username;
-    [SerializeField] private TextMeshProUGUI password;
+    [SerializeField] private TMP_InputField password;
     [SerializeField] private TextMeshProUGUI country;
     [SerializeField] private TextMeshProUGUI title;
     

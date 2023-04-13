@@ -20,7 +20,19 @@ router.use((req, res, next) => {
     console.log("Request received.");
     next()
 });
-
+/* template
+router.get("/", (req, res) => {
+    .(, (err, results) => {
+        if (err) {
+            console.error(err);
+            res.status(500);
+            res.send("An error has occurred: " + err);
+            return;
+        }
+        res.json(results);
+    });
+});
+*/
 router.get("/", function (req, res) {
     res.send("<h1> Hello! </h1>");
 });
@@ -46,11 +58,9 @@ router.post("/chat", (req, res) => {
 });
 // read
     // get chat clan messages
-router.get("/chat", (req, res) => {
+router.get("/chat/clan_messages/:clanID", (req, res) => {
 
-    const chatID = req.body.chatID;
-
-    chat.getChatClanMessages(chatID, (err, results) => {
+    chat.getChatClanMessages(req.params.clanID, (err, results) => {
         if (err) {
             console.error(err);
             res.status(500);
@@ -64,11 +74,9 @@ router.get("/chat", (req, res) => {
 // update (not needed)
 // delete
     // delete chat
-router.delete("/chat", (req, res) => {
+router.delete("/chat/:clanID", (req, res) => {
 
-    const chatID = req.body.chatID;
-
-    chat.deleteChat(chatID, (err, results) =>{
+    chat.deleteChat(req.params.clanID, (err, results) =>{
         if (err) {
             console.error(err);
             res.status(500);
@@ -98,7 +106,46 @@ router.post("/clan", (req, res) => {
         res.json(results);
     });
 });
-// read (later)
+// read
+    // get list of clans
+router.get("/clan", (req, res) => {
+    
+    clan.getClans((err, results) => {
+        if (err) {
+            console.error(err);
+            res.status(500);
+            res.send("An error has occurred: " + err);
+            return;
+        }
+        res.json(results);
+    });
+
+});
+    // get limited list of clans
+router.get("/clan/limit/:limit", (req, res) => {
+    
+    clan.getClansWithLimit(req.params.limit, (err, results) => {
+        if (err) {
+            console.error(err);
+            res.status(500);
+            res.send("An error has occurred: " + err);
+            return;
+        }
+        res.json(results);
+    });
+});
+    // get clan ID from clan name
+router.get("/clan/get_clan_id/:clan_name", (req, res) => {
+    clan.getClanID(req.params.clan_name, (err, results) => {
+        if (err) {
+            console.error(err);
+            res.status(500);
+            res.send("An error has occurred: " + err);
+            return;
+        }
+        res.json(results);
+    });
+});
 
 // update
     // update clan
@@ -116,11 +163,9 @@ router.patch("/clan", (req, res) => {
 });
 // delete
     // delete clan
-router.delete("/clan", (req, res) => {
+router.delete("/clan/:clanID", (req, res) => {
 
-    const clanID = req.body.clanID;
-
-    clan.deleteClan(clanID, (err, results) => {
+    clan.deleteClan(req.params.clanID, (err, results) => {
         if (err) {
             console.error(err);
             res.status(500);
@@ -154,11 +199,9 @@ router.post("/clan_leaders", (req, res) => {
 });
 // read
     // get clan leaders
-router.get("/clan_leaders", (req, res) => {
+router.get("/clan_leaders/get_clan_leaders/:clanID", (req, res) => {
 
-    const clanID = req.body.clanID;
-
-    clan_leaders.getClan_LeadersInClan(clanID, (err, results) => {
+    clan_leaders.getClan_LeadersInClan(req.params.clanID, (err, results) => {
         if (err) {
             console.error(err);
             res.status(500);
@@ -171,11 +214,9 @@ router.get("/clan_leaders", (req, res) => {
 });
 // update (not needed)
 // delete
-router.delete("/clan_leaders", (req, res) => {
+router.delete("/clan_leaders/delete_leader/:playerID", (req, res) => {
 
-    const playerID = req.body.playerID;
-
-    clan_leaders.deleteClan_Leaders(playerID, (err, results) => {
+    clan_leaders.deleteClan_Leaders(req.params.playerID, (err, results) => {
         if (err) {
             console.error(err);
             res.status(500);
@@ -206,14 +247,10 @@ router.post("/clan_raid_events", (req, res) => {
     });
 });
 // read (later)
+    // get raid Id from clan Id
+router.get("/clan_raid_events/get_raid_id/:clanID", (req, res) => {
 
-// update (not needed)
-// delete
-router.delete("/clan_raid_events", (req, res) => {
-
-    const raidID = req.body.raidID;
-    
-    clan_raid_events.deleteClan_Raid_Events(raidID, (err, results) => {
+    clan_raid_events.getClan_Raid_EventsID(req.params.clanID, (err, results) => {
         if (err) {
             console.error(err);
             res.status(500);
@@ -222,6 +259,22 @@ router.delete("/clan_raid_events", (req, res) => {
         }
         res.json(results);
     });
+
+});
+// update (not needed)
+// delete
+router.delete("/clan_raid_events/:raidID", (req, res) => {
+    
+    clan_raid_events.deleteClan_Raid_Events(req.params.raidID, (err, results) => {
+        if (err) {
+            console.error(err);
+            res.status(500);
+            res.send("An error has occurred: " + err);
+            return;
+        }
+        res.json(results);
+    });
+
 });
 //#endregion
 
@@ -297,10 +350,6 @@ router.patch("/player", (req, res) => {
 
     const {playerID, updateVals} = req.body;
 
-    console.log(playerID);
-    console.log(req.body.playerID);
-    console.log(req.body.updateVals);
-
     player.updatePlayer(playerID, updateVals, (err, results) => {
         if (err) {
             console.error(err);
@@ -349,11 +398,9 @@ router.post("/raid_score", (req, res) => {
 
 });
 // read
-router.get("/raid_score", (req, res) => {
+router.get("/raid_score/:raidID", (req, res) => {
 
-    const raidID = req.body.raidID;
-
-    raid_score.getRaid_EventRaid_Score(raidID, (err, results) => {
+    raid_score.getRaid_EventRaid_Score(req.params.raidID, (err, results) => {
         if (err) {
             console.error(err);
             res.status(500);

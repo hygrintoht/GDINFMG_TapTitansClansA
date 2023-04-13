@@ -21,6 +21,8 @@ public class ClanSearch : MonoBehaviour
         for (int i = 0; i < node.Count; i++)
         {
             GameObject clone = Instantiate(clanPrefab, transform.position, Quaternion.identity, clanSearchContent.transform);
+            clanList.Add(clone);
+
             Clan clan = clone.GetComponent<Clan>();
             clan.clanID = node[i][0];
             clan.clanInviteCode = node[i][1];

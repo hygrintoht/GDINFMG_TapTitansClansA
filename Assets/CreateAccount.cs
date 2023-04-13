@@ -16,7 +16,7 @@ public class CreateAccount : MonoBehaviour
     };
 
     [SerializeField] private TextMeshProUGUI username;
-    [SerializeField] private TMP_InputField password;
+    [SerializeField] private TextMeshProUGUI email;
     [SerializeField] private TextMeshProUGUI country;
     [SerializeField] private TextMeshProUGUI title;
     
@@ -31,7 +31,7 @@ public class CreateAccount : MonoBehaviour
         
         //get data from textareas
         _submittedDataList.Add(username.text);
-        _submittedDataList.Add(password.text);
+        _submittedDataList.Add(email.text);
         _submittedDataList.Add(country.text);
         _submittedDataList.Add(title.text);
         DateTime dateToday = DateTime.Now;

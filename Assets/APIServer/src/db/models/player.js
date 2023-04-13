@@ -36,7 +36,7 @@ function getPlayerID(name, callback){
 }
 
 function getPlayerStats(ID, callback){
-    let stmt = 'SELECT playerID, username, email, clanID, country, max_prestige_stage, artifacts_collected, crafting_power, total_pet_levels, skill_points_owned, play_time, last_played FROM player WHERE username = ?';
+    let stmt = 'SELECT playerID, username, email, clanID, country, max_prestige_stage, artifacts_collected, crafting_power, total_pet_levels, skill_points_owned, play_time, last_played FROM player WHERE playerID = ?';
     pool.execute(stmt, [ID], callback);
 }
 

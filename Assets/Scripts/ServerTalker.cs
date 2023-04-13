@@ -12,8 +12,6 @@ public class ServerTalker : MonoBehaviour
     const string address = "localhost:3000";
     public string query;
 
-    [SerializeField] private ClanSearch clanSearch;
-
     private void Awake()
     {
         // If there is an instance, and it's not me, delete myself.
@@ -28,16 +26,29 @@ public class ServerTalker : MonoBehaviour
         }
     }
 
-    private void Update()
+    //READ-GET
+    public IEnumerator GetPlayerStats(string query, int ID)
     {
-        if (Input.GetMouseButtonDown(0))
+        Debug.Log("Query Player");
+        Debug.Log(address + query + "/" + ID.ToString());
+
+        UnityWebRequest request = UnityWebRequest.Get(address + query + "/" + ID.ToString());
+        yield return request.SendWebRequest();
+
+        if (request.result != UnityWebRequest.Result.Success)
         {
-            StartCoroutine(GetClans("/clan"));
+            Debug.LogError("Something went wrong: " + request.error);
         }
+        else
+        {
+            Debug.Log(request.downloadHandler.text);
+            UIManager.Instance.AssignProfileText(request.downloadHandler.text);
+        }
+
+        request.Dispose();
     }
 
-    //READ-GET
-    public IEnumerator GetPlayerStats(string query, string username)
+    public IEnumerator GetPlayerID(string query, string username)
     {
         Debug.Log("Query Player");
         Debug.Log(address + query + "/" + username);
@@ -52,8 +63,14 @@ public class ServerTalker : MonoBehaviour
         else
         {
             Debug.Log(request.downloadHandler.text);
+            JSONNode node = JSON.Parse(request.downloadHandler.text);
+            UIManager.Instance.player.playerID = node[0][0];
+
         }
+
+        request.Dispose();
     }
+
 
     public IEnumerator GetClans(string query)
     {
@@ -69,8 +86,10 @@ public class ServerTalker : MonoBehaviour
         else
         {
             Debug.Log("Query Succesful");
-            clanSearch.ClanSearchSetup(request.downloadHandler.text);
+            UIManager.Instance.clanSearch.ClanSearchSetup(request.downloadHandler.text);
         }
+
+        request.Dispose();
     }
 
     //CREATE
@@ -101,6 +120,11 @@ public class ServerTalker : MonoBehaviour
         else
         {
             Debug.Log("Form upload complete!");
+            UIManager.Instance.player.username = _submittedDataList[0];
+            StartCoroutine(GetPlayerID("/player/ID", _submittedDataList[0]));
+            UIManager.Instance.CloseProfileCreatePanel();
+
+
         }
 
         request.Dispose();

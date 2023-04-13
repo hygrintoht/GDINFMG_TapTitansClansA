@@ -312,11 +312,27 @@ router.get("/player", (req, res) => {
     
 });
 
-router.get("/player/:username", (req, res) => {
+router.get("/player/stats/:playerID", (req, res) => {
+
+    const ID = req.params.playerID;
+
+    player.getPlayerStats(ID, (err, results) => {
+        if (err) {
+            console.error(err);
+            res.status(500);
+            res.send("An error has occurred: " + err);
+            return;
+        }
+        res.json(results);
+    });
+    
+});
+
+router.get("/player/ID/:username", (req, res) => {
 
     const name = req.params.username;
 
-    player.getPlayerStats(name, (err, results) => {
+    player.getPlayerID(name, (err, results) => {
         if (err) {
             console.error(err);
             res.status(500);

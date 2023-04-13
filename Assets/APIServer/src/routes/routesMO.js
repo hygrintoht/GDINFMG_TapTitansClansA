@@ -15,6 +15,7 @@ const raid_score = require("../db/models/raid_score.js");
 // for the request body. Without this, req.body will cannot be parsed and will always return `undefined`!
 const router = express.Router();
 router.use(express.json());
+router.use(express.urlencoded({ extended: true }));
 
 router.use((req, res, next) => {
     console.log("Request received.");
@@ -133,9 +134,11 @@ router.get("/clan/limit/:limit", (req, res) => {
         }
         res.json(results);
     });
+
 });
     // get clan ID from clan name
 router.get("/clan/get_clan_id/:clan_name", (req, res) => {
+
     clan.getClanID(req.params.clan_name, (err, results) => {
         if (err) {
             console.error(err);
@@ -145,13 +148,35 @@ router.get("/clan/get_clan_id/:clan_name", (req, res) => {
         }
         res.json(results);
     });
+
 });
 
 // update
     // update clan
+    // general update funtion
+/* format(body) insert values needed, remove stuff if needed
+
+{
+    "clanID": 12345,
+    "updateVals":
+    [
+        {
+            "clan_name":            "",
+            "num_raids_completed":  ,
+            "num_clan_morale":      ,
+            "required_stage":       ,
+            "required_raid_level":  ,
+            "privacy":              ,
+        }
+    ]
+}
+
+*/
 router.patch("/clan", (req, res) => {
-    const {clanID, updateVals} = req.body;
-    clan.updateClan(clanID, updateVals, (err, results) => {
+
+    //const {clanID, updateVals} = req.body;
+
+    clan.updateClan(req.body.clanID, req.body.updateVals, (err, results) => {
         if (err) {
             console.error(err);
             res.status(500)
@@ -161,6 +186,7 @@ router.patch("/clan", (req, res) => {
         res.json(results);
     });
 });
+
 // delete
     // delete clan
 router.delete("/clan/:clanID", (req, res) => {
@@ -344,13 +370,38 @@ router.get("/clan/:clanID/players", (req, res) => {
     
 });
 
-
 // update
+    // general update funtion
+/* format(body) insert values needed, remove stuff if needed
+
+{
+    "playerID": 12345,
+    "updateVals":
+    [
+        {
+            "username":             "",
+            "email":                "",
+            "clanID":               ,
+            "country":              "",
+            "title":                "",
+            "max_prestige_stage":   ,
+            "artifacts_collected":  ,
+            "crafting_power":       ,
+            "total_pet_levels":     ,
+            "skill_points_owned":   ,
+            "play_time":            ,
+            "last_played":          ,
+            "installation_date":    ,
+        }
+    ]
+}
+
+*/ 
 router.patch("/player", (req, res) => {
 
-    const {playerID, updateVals} = req.body;
+    //const {playerID, updateVals} = req.body;
 
-    player.updatePlayer(playerID, updateVals, (err, results) => {
+    player.updatePlayer(req.body.playerID, req.body.updateVals, (err, results) => {
         if (err) {
             console.error(err);
             res.status(500)

@@ -176,7 +176,7 @@ router.patch("/clan", (req, res) => {
 
     //const {clanID, updateVals} = req.body;
 
-    clan.updateClan(req.body.clanID, req.body.updateVals, (err, results) => {
+    clan.updateClan(req.body.clanID, req.body.updateVals[0], (err, results) => {
         if (err) {
             console.error(err);
             res.status(500)
@@ -401,7 +401,7 @@ router.patch("/player", (req, res) => {
 
     //const {playerID, updateVals} = req.body;
 
-    player.updatePlayer(req.body.playerID, req.body.updateVals, (err, results) => {
+    player.updatePlayer(req.body.playerID, req.body.updateVals[0], (err, results) => {
         if (err) {
             console.error(err);
             res.status(500)

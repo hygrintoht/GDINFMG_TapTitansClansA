@@ -153,6 +153,7 @@ public class ServerTalker : MonoBehaviour
         else
         {
             Debug.Log("Form upload complete!");
+            UIManager.Instance.CloseClanCreatePanel();
         }
 
         request.Dispose();

@@ -36,6 +36,8 @@ public class ClanSearch : MonoBehaviour
             clan.AssignText();
 
         }
+
+       
         /*
         GameObject clone = Instantiate(clanPrefab, transform.position, Quaternion.identity, clanSearchContent.transform);
         Clan clan = clone.AddComponent<Clan>();

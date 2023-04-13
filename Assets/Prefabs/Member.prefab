@@ -147,8 +147,9 @@ GameObject:
   - component: {fileID: 4644361824464941360}
   - component: {fileID: 4644361824464941519}
   - component: {fileID: 4644361824464941518}
+  - component: {fileID: 2737546229378908859}
   m_Layer: 5
-  m_Name: pf_MemberName 1
+  m_Name: Member
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -257,3 +258,37 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &2737546229378908859
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4644361824464941516}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8f2f49635fd2f2c46b97401ba04e49db, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerID: 0
+  username: 
+  email: 
+  clanID: 0
+  country: 
+  title: 
+  maxPrestigeStage: 0
+  artifactsCollected: 0
+  craftingPower: 0
+  totalPetLevels: 0
+  skillPointsOwned: 0
+  playerIDText: {fileID: 0}
+  usernameText: {fileID: 0}
+  emailText: {fileID: 0}
+  clanIDText: {fileID: 0}
+  countryText: {fileID: 0}
+  titleText: {fileID: 0}
+  maxPrestigeStageText: {fileID: 0}
+  artifactsCollectedText: {fileID: 0}
+  craftingPowerText: {fileID: 0}
+  totalPetLevelsText: {fileID: 0}
+  skillPointsOwnedText: {fileID: 0}

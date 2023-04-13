@@ -30,6 +30,7 @@ public class UIManager : MonoBehaviour
     [SerializeField] private GameObject profileCreatePanel;
     [SerializeField] private GameObject clanSearchPanel;
     [SerializeField] private GameObject clanCreatePanel;
+    [SerializeField] private GameObject clanProfile;
 
     public void Start()
     {
@@ -38,6 +39,16 @@ public class UIManager : MonoBehaviour
         profilePanel.SetActive(false);
         clanSearchPanel.SetActive(false);
         clanCreatePanel.SetActive(false);
+        clanProfile.SetActive(false);
+    }
+    public void OpenClanProfile()
+    {
+        clanProfile.SetActive(true);
+    }
+
+    public void CloseClanProfile()
+    {
+        clanProfile.SetActive(false);
     }
 
     public void OpenProfileCreatePanel()

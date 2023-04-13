@@ -11,6 +11,16 @@ public class ClanSearch : MonoBehaviour
     public List<GameObject> clanList = new List<GameObject>();
 
 
+    public void ClearClans()
+    {
+        foreach (GameObject obj in clanList)
+        {
+            Destroy(obj);
+        }
+
+        clanList.Clear();
+    }
+
     public void ClanSearchSetup(string rawResponse)
     {
         JSONNode node = JSON.Parse(rawResponse);

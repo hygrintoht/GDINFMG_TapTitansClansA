@@ -24,13 +24,14 @@ public class UIManager : MonoBehaviour
     [Header("Player")]
     public Player player;
     public ClanSearch clanSearch;
+    public ClanProfile clanProfile;
 
     [Header("Panels")]
     [SerializeField] private GameObject profilePanel;
     [SerializeField] private GameObject profileCreatePanel;
     [SerializeField] private GameObject clanSearchPanel;
     [SerializeField] private GameObject clanCreatePanel;
-    [SerializeField] private GameObject clanProfile;
+    [SerializeField] private GameObject clanProfilePanel;
 
     public void Start()
     {
@@ -39,16 +40,27 @@ public class UIManager : MonoBehaviour
         profilePanel.SetActive(false);
         clanSearchPanel.SetActive(false);
         clanCreatePanel.SetActive(false);
-        clanProfile.SetActive(false);
+        clanProfilePanel.SetActive(false);
     }
-    public void OpenClanProfile()
+    public void OpenClanProfile(Clan clan)
     {
-        clanProfile.SetActive(true);
+        clanProfilePanel.SetActive(true);
+        clanProfile.ClearMembers();
+        clanProfile.clan = clan;
+        clanProfile.SetupClanStats();
+        
+        StartCoroutine(ServerTalker.Instance.GetPlayersFromClan("/clan", clan.clanID));
+
+    }
+
+    public void SetupClanMembers(string rawResponse)
+    {
+        clanProfile.SetupClanMembers(rawResponse);
     }
 
     public void CloseClanProfile()
     {
-        clanProfile.SetActive(false);
+        clanProfilePanel.SetActive(false);
     }
 
     public void OpenProfileCreatePanel()
@@ -69,6 +81,27 @@ public class UIManager : MonoBehaviour
     {
         ServerTalker.Instance.StartCoroutine(ServerTalker.Instance.GetPlayerStats("/player/stats", player.playerID));
         profilePanel.SetActive(true);
+    }
+
+    public void InspectPlayer(Player other)
+    {
+        profilePanel.SetActive(true);
+        Player player = profilePanel.GetComponent<Player>();
+
+        player.playerID = other.playerID;
+        player.username = other.username;
+        player.email = other.email;
+        player.clanID = other.clanID;
+        player.country = other.country;
+        player.title = other.title;
+        player.maxPrestigeStage = other.maxPrestigeStage;
+        player.artifactsCollected = other.artifactsCollected;
+        player.craftingPower = other.craftingPower;
+        player.totalPetLevels = other.totalPetLevels;
+        player.skillPointsOwned = other.skillPointsOwned;
+
+        player.AssignPlayerText();
+
     }
 
     public void AssignProfileText(string rawResponse)
@@ -97,6 +130,7 @@ public class UIManager : MonoBehaviour
     }
     public void CloseClanSearchPanel()
     {
+        clanSearch.ClearClans();
         clanSearchPanel.SetActive(false);
     }
     public void CloseClanCreatePanel()

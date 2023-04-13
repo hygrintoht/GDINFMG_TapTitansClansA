@@ -7555,15 +7555,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4901707e10943be458202b869624de07, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  clanProfileTab: {fileID: 0}
-  clanIDText: {fileID: 0}
-  clanNameText: {fileID: 0}
-  inviteCode: {fileID: 0}
-  raidCompletedText: {fileID: 0}
-  clanMoraleText: {fileID: 0}
-  requiredStageText: {fileID: 0}
-  requiredRaidLevelText: {fileID: 0}
-  privacyText: {fileID: 0}
+  clanProfileTab: {fileID: 1229242048232347152}
+  clanIDText: {fileID: 1229242047501243456}
+  clanNameText: {fileID: 1229242048434387314}
+  inviteCode: {fileID: 1229242047967592717}
+  raidCompletedText: {fileID: 1229242048894986721}
+  clanMoraleText: {fileID: 1229242047799939907}
+  requiredStageText: {fileID: 1229242047334040508}
+  requiredRaidLevelText: {fileID: 1229242047488355055}
+  privacyText: {fileID: 1229242047877127459}
   clan: {fileID: 0}
   clanMembers: []
 --- !u!114 &1229242047658048016

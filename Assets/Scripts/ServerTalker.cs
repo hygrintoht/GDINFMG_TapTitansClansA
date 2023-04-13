@@ -48,6 +48,24 @@ public class ServerTalker : MonoBehaviour
         request.Dispose();
     }
 
+    public IEnumerator GetPlayersFromClan(string query, int clanID)
+    {
+        UnityWebRequest request = UnityWebRequest.Get(address + query + "/" + clanID.ToString() + "/players");
+        yield return request.SendWebRequest();
+
+        if (request.result != UnityWebRequest.Result.Success)
+        {
+            Debug.LogError("Something went wrong: " + request.error);
+        }
+        else
+        {
+            Debug.Log("Query Succesful");
+            UIManager.Instance.SetupClanMembers(request.downloadHandler.text);
+        }
+
+        request.Dispose();
+    }
+
     public IEnumerator GetPlayerID(string query, string username)
     {
         Debug.Log("Query Player");

@@ -28,6 +28,7 @@ function getClanID(clan_name, callback){
     let stmt = 'SELECT clanID FROM clan WHERE clan_name = ?';
     pool.execute(stmt, [clan_name], callback);
 }
+
 // update
     // general update function
 function updateClan(clanID, update_clan, callback) {

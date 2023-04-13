@@ -40,6 +40,11 @@ function getPlayerStats(ID, callback){
     pool.execute(stmt, [ID], callback);
 }
 
+function getPlayersFromClan(clanID, callback){
+    let stmt = 'Select username FROM player WHERE clanID = ?';
+    pool.execute(stmt, [clanID], callback);
+}
+
 // update
     // general update function
 function updatePlayer(playerID, update_player, callback) {
@@ -75,5 +80,6 @@ module.exports = {
     getPlayerID,
     updatePlayer,
     deletePlayer,
-    getPlayerStats
+    getPlayerStats,
+    getPlayersFromClan
 };

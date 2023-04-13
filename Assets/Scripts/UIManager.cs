@@ -23,14 +23,16 @@ public class UIManager : MonoBehaviour
 
     [Header("Player")]
     public Player player;
+    public Clan clan;
     public ClanSearch clanSearch;
+    public ClanProfile clanProfile;
 
     [Header("Panels")]
     [SerializeField] private GameObject profilePanel;
     [SerializeField] private GameObject profileCreatePanel;
     [SerializeField] private GameObject clanSearchPanel;
     [SerializeField] private GameObject clanCreatePanel;
-    [SerializeField] private GameObject clanProfile;
+    [SerializeField] private GameObject clanProfilePanel;
 
     public void Start()
     {
@@ -39,16 +41,79 @@ public class UIManager : MonoBehaviour
         profilePanel.SetActive(false);
         clanSearchPanel.SetActive(false);
         clanCreatePanel.SetActive(false);
-        clanProfile.SetActive(false);
+        clanProfilePanel.SetActive(false);
     }
-    public void OpenClanProfile()
+    public void OpenClanProfile(Clan clan)
     {
-        clanProfile.SetActive(true);
+        clanProfilePanel.SetActive(true);
+        clanProfile.ClearMembers();
+        clanProfile.clan = clan;
+        clanProfile.SetupClanStats();
+        
+        StartCoroutine(ServerTalker.Instance.GetPlayersFromClan("/clan", clan.clanID));
+
+    }
+
+    public void ProcessMyClan(string rawResponse)
+    {
+        JSONNode node = JSON.Parse(rawResponse);
+        clan.clanID = node[0][0];
+        clan.clanInviteCode = node[0][1];
+        clan.clanName = node[0][2];
+        clan.numRaidCompleted = node[0][3];
+        clan.numClanMorale = node[0][4];
+        clan.requiredStage = node[0][5];
+        clan.requiredRaidLevel = node[0][6];
+        clan.privacy = node[0][7];
+
+        clanProfilePanel.SetActive(true);
+        clanProfile.ClearMembers();
+        clanProfile.clan = clan;
+        clanProfile.SetupClanStats();
+        StartCoroutine(ServerTalker.Instance.GetPlayersFromClan("/clan", clan.clanID));
+
+    }
+
+    public void JoinClan(Clan otherClan)
+    {
+        if (player.clanID == otherClan.clanID)
+        {
+            Debug.Log("same clan");
+            return;
+        }
+
+        JSONObject obj = new JSONObject();
+        obj.Add("clanID", otherClan.clanID);
+
+        JSONArray array = new JSONArray();
+        array.Add(obj);
+
+        StartCoroutine(ServerTalker.Instance.UpdatePlayer("/player", player.playerID, array));
+
+        clan.clanID = otherClan.clanID;
+
+    }
+
+    public void OpenMyClan()
+    {
+        if (clan.clanID == 0)
+        {
+            Debug.Log("No clan joined!");
+            return;
+        }
+
+        StartCoroutine(ServerTalker.Instance.GetClanByID("/clan", clan.clanID));
+
+    }
+
+    public void SetupClanMembers(string rawResponse)
+    {
+        clanProfile.SetupClanMembers(rawResponse);
     }
 
     public void CloseClanProfile()
     {
-        clanProfile.SetActive(false);
+        clanProfilePanel.SetActive(false);
     }
 
     public void OpenProfileCreatePanel()
@@ -71,6 +136,27 @@ public class UIManager : MonoBehaviour
         profilePanel.SetActive(true);
     }
 
+    public void InspectPlayer(Player other)
+    {
+        profilePanel.SetActive(true);
+        Player player = profilePanel.GetComponent<Player>();
+
+        player.playerID = other.playerID;
+        player.username = other.username;
+        player.email = other.email;
+        player.clanID = other.clanID;
+        player.country = other.country;
+        player.title = other.title;
+        player.maxPrestigeStage = other.maxPrestigeStage;
+        player.artifactsCollected = other.artifactsCollected;
+        player.craftingPower = other.craftingPower;
+        player.totalPetLevels = other.totalPetLevels;
+        player.skillPointsOwned = other.skillPointsOwned;
+
+        player.AssignPlayerText();
+
+    }
+
     public void AssignProfileText(string rawResponse)
     {
         JSONNode node = JSON.Parse(rawResponse);
@@ -88,6 +174,18 @@ public class UIManager : MonoBehaviour
         player.totalPetLevels = node[0][9];
         player.skillPointsOwned = node[0][10];
 
+        this.player.playerID = player.playerID;
+        this.player.username = player.username;
+        this.player.email = player.email;
+        this.player.clanID = player.clanID;
+        this.player.country = player.country;
+        this.player.title = player.title;
+        this.player.maxPrestigeStage = player.maxPrestigeStage;
+        this.player.artifactsCollected = player.artifactsCollected;
+        this.player.craftingPower = player.craftingPower;
+        this.player.totalPetLevels = player.totalPetLevels;
+        this.player.skillPointsOwned = player.skillPointsOwned;
+
         player.AssignPlayerText();
     }
 
@@ -97,6 +195,7 @@ public class UIManager : MonoBehaviour
     }
     public void CloseClanSearchPanel()
     {
+        clanSearch.ClearClans();
         clanSearchPanel.SetActive(false);
     }
     public void CloseClanCreatePanel()

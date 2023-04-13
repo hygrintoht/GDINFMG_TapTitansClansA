@@ -27,6 +27,24 @@ public class ServerTalker : MonoBehaviour
     }
 
     //READ-GET
+    public IEnumerator GetClanByID(string query, int ID)
+    {
+        UnityWebRequest request = UnityWebRequest.Get(address + query + "/" + ID.ToString());
+        yield return request.SendWebRequest();
+
+        if (request.result != UnityWebRequest.Result.Success)
+        {
+            Debug.LogError("Something went wrong: " + request.error);
+        }
+        else
+        {
+            Debug.Log(request.downloadHandler.text);
+            UIManager.Instance.ProcessMyClan(request.downloadHandler.text);
+        }
+
+        request.Dispose();
+    }
+
     public IEnumerator GetPlayerStats(string query, int ID)
     {
         Debug.Log("Query Player");
@@ -43,6 +61,24 @@ public class ServerTalker : MonoBehaviour
         {
             Debug.Log(request.downloadHandler.text);
             UIManager.Instance.AssignProfileText(request.downloadHandler.text);
+        }
+
+        request.Dispose();
+    }
+
+    public IEnumerator GetPlayersFromClan(string query, int clanID)
+    {
+        UnityWebRequest request = UnityWebRequest.Get(address + query + "/" + clanID.ToString() + "/players");
+        yield return request.SendWebRequest();
+
+        if (request.result != UnityWebRequest.Result.Success)
+        {
+            Debug.LogError("Something went wrong: " + request.error);
+        }
+        else
+        {
+            Debug.Log("Query Succesful");
+            UIManager.Instance.SetupClanMembers(request.downloadHandler.text);
         }
 
         request.Dispose();
@@ -154,6 +190,39 @@ public class ServerTalker : MonoBehaviour
         {
             Debug.Log("Form upload complete!");
             UIManager.Instance.CloseClanCreatePanel();
+        }
+
+        request.Dispose();
+    }
+
+    // PATCH
+
+    //PATCH PLAYER
+    public IEnumerator UpdatePlayer(string query, int playerID, JSONArray updateVals)
+    {
+        
+        JSONObject body = new JSONObject();
+        body.Add("playerID", playerID);
+        body.Add("updateVals", updateVals);
+
+        byte[] requestData = Encoding.UTF8.GetBytes(body.ToString());
+
+        UnityWebRequest request = UnityWebRequest.Put(address + query, requestData);
+        request.SetRequestHeader("Content-Type", "application/json");
+        request.method = "PATCH";
+        request.uploadHandler = new UploadHandlerRaw(requestData);
+        request.downloadHandler = new DownloadHandlerBuffer();
+
+        yield return request.SendWebRequest();
+
+        if (request.result != UnityWebRequest.Result.Success)
+        {
+            Debug.Log(request.error);
+        }
+        else
+        {
+            Debug.Log("Form upload complete!");
+
         }
 
         request.Dispose();

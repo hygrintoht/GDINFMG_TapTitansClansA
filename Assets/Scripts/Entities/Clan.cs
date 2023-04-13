@@ -21,4 +21,9 @@ public class Clan : MonoBehaviour
     {
         clanNameText.text = clanName;
     }
+
+    public void OpenClanProfile()
+    {
+        UIManager.Instance.OpenClanProfile(this);
+    }
 }

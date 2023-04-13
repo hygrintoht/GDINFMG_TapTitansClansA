@@ -31,6 +31,9 @@ public class Player : MonoBehaviour
     [SerializeField] private TMP_Text totalPetLevelsText;
     [SerializeField] private TMP_Text skillPointsOwnedText;
 
+    [Header("Clan Member Reference")]
+    [SerializeField] private TMP_Text playerName;
+
     public void AssignPlayerText()
     {
         playerIDText.text = playerID.ToString();
@@ -44,5 +47,15 @@ public class Player : MonoBehaviour
         craftingPowerText.text = craftingPower.ToString();
         totalPetLevelsText.text = totalPetLevels.ToString();
         skillPointsOwnedText.text = skillPointsOwned.ToString();
+    }
+
+    public void AssignMemberText()
+    {
+        playerName.text = username;
+    }
+
+    public void InspectPlayer()
+    {
+        UIManager.Instance.InspectPlayer(this);
     }
 }

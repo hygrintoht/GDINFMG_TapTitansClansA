@@ -1199,7 +1199,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   query: 
-  clansearch: {fileID: 0}
+  clanSearch: {fileID: 5347954667507084849}
 --- !u!4 &870298963
 Transform:
   m_ObjectHideFlags: 0

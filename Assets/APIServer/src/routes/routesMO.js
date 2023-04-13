@@ -99,7 +99,17 @@ router.post("/clan", (req, res) => {
     });
 });
 // read (later)
-
+router.get("/clan", (req,res)=>{
+    clan.getClans((err, results)=>{
+        if (err) {
+            console.error(err);
+            res.status(500);
+            res.send("An error has occurred: " + err);
+            return;
+        }
+        res.json(results);
+    });
+});
 // update
     // update clan
 router.patch("/clan", (req, res) => {

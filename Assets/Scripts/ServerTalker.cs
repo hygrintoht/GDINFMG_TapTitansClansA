@@ -12,7 +12,7 @@ public class ServerTalker : MonoBehaviour
     const string address = "localhost:3000";
     public string query;
 
-    [SerializeField] private ClanSearch clansearch;
+    [SerializeField] private ClanSearch clanSearch;
 
     private void Awake()
     {
@@ -68,7 +68,8 @@ public class ServerTalker : MonoBehaviour
         }
         else
         {
-            Debug.Log(request.downloadHandler.text);
+            Debug.Log("Query Succesful");
+            clanSearch.ClanSearchSetup(request.downloadHandler.text);
         }
     }
 

@@ -137,9 +137,9 @@ router.get("/clan/limit/:limit", (req, res) => {
 
 });
     // get clan ID from clan name
-router.get("/clan/get_clan_id/:clan_name", (req, res) => {
+router.get("/clan/:clanID", (req, res) => {
 
-    clan.getClanID(req.params.clan_name, (err, results) => {
+    clan.getClanByID(req.params.clanID, (err, results) => {
         if (err) {
             console.error(err);
             res.status(500);

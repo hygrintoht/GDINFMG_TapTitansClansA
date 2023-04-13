@@ -26,6 +26,12 @@ public class ClanProfile : MonoBehaviour
     public Clan clan;
     public List<GameObject> clanMembers = new List<GameObject>();
 
+
+    public void JoinClan()
+    {
+        UIManager.Instance.JoinClan(clan);
+    }
+
     public void OpenClanStats()
     {
         clanProfileTab.SetActive(true);

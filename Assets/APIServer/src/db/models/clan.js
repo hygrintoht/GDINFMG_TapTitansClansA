@@ -24,8 +24,8 @@ function getClansWithLimit(limit, callback){
     pool.execute(stmt, [limit], callback);
 }
     // get clan id from name
-function getClanID(clan_name, callback){
-    let stmt = 'SELECT clanID FROM clan WHERE clan_name = ?';
+function getClanByID(clan_name, callback){
+    let stmt = 'SELECT * FROM clan WHERE clanID = ?';
     pool.execute(stmt, [clan_name], callback);
 }
 
@@ -57,7 +57,7 @@ module.exports = {
     createClan,
     getClans,
     getClansWithLimit,
-    getClanID,
+    getClanByID,
     updateClan,
     deleteClan
 };

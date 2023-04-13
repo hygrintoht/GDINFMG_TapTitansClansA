@@ -23,6 +23,7 @@ public class UIManager : MonoBehaviour
 
     [Header("Player")]
     public Player player;
+    public Clan clan;
     public ClanSearch clanSearch;
     public ClanProfile clanProfile;
 
@@ -50,6 +51,58 @@ public class UIManager : MonoBehaviour
         clanProfile.SetupClanStats();
         
         StartCoroutine(ServerTalker.Instance.GetPlayersFromClan("/clan", clan.clanID));
+
+    }
+
+    public void ProcessMyClan(string rawResponse)
+    {
+        JSONNode node = JSON.Parse(rawResponse);
+        clan.clanID = node[0][0];
+        clan.clanInviteCode = node[0][1];
+        clan.clanName = node[0][2];
+        clan.numRaidCompleted = node[0][3];
+        clan.numClanMorale = node[0][4];
+        clan.requiredStage = node[0][5];
+        clan.requiredRaidLevel = node[0][6];
+        clan.privacy = node[0][7];
+
+        clanProfilePanel.SetActive(true);
+        clanProfile.ClearMembers();
+        clanProfile.clan = clan;
+        clanProfile.SetupClanStats();
+        StartCoroutine(ServerTalker.Instance.GetPlayersFromClan("/clan", clan.clanID));
+
+    }
+
+    public void JoinClan(Clan otherClan)
+    {
+        if (player.clanID == otherClan.clanID)
+        {
+            Debug.Log("same clan");
+            return;
+        }
+
+        JSONObject obj = new JSONObject();
+        obj.Add("clanID", otherClan.clanID);
+
+        JSONArray array = new JSONArray();
+        array.Add(obj);
+
+        StartCoroutine(ServerTalker.Instance.UpdatePlayer("/player", player.playerID, array));
+
+        clan.clanID = otherClan.clanID;
+
+    }
+
+    public void OpenMyClan()
+    {
+        if (clan.clanID == 0)
+        {
+            Debug.Log("No clan joined!");
+            return;
+        }
+
+        StartCoroutine(ServerTalker.Instance.GetClanByID("/clan", clan.clanID));
 
     }
 
@@ -120,6 +173,18 @@ public class UIManager : MonoBehaviour
         player.craftingPower = node[0][8];
         player.totalPetLevels = node[0][9];
         player.skillPointsOwned = node[0][10];
+
+        this.player.playerID = player.playerID;
+        this.player.username = player.username;
+        this.player.email = player.email;
+        this.player.clanID = player.clanID;
+        this.player.country = player.country;
+        this.player.title = player.title;
+        this.player.maxPrestigeStage = player.maxPrestigeStage;
+        this.player.artifactsCollected = player.artifactsCollected;
+        this.player.craftingPower = player.craftingPower;
+        this.player.totalPetLevels = player.totalPetLevels;
+        this.player.skillPointsOwned = player.skillPointsOwned;
 
         player.AssignPlayerText();
     }

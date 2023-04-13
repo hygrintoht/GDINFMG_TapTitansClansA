@@ -9,17 +9,18 @@ public class CreateAccount : MonoBehaviour
 {
     public enum PersonalData
     {
-        Username,
+        Username = 0,
         Password,
         Country,
         Title,
     };
-
+    //Text Gameobjects taking player input
     [SerializeField] private TextMeshProUGUI username;
     [SerializeField] private TMP_InputField password;
     [SerializeField] private TextMeshProUGUI country;
     [SerializeField] private TextMeshProUGUI title;
     
+    //data to be sent to the SERVER
     private List<String> _submittedDataList = new List<string>();
 
     private PersonalData _personalData;
@@ -46,6 +47,7 @@ public class CreateAccount : MonoBehaviour
        
     }
 
+    //TODO - SERVER-SIDE
     public void UploadData()
     {
         //_submittedDataList[(int)PersonalData.Username];

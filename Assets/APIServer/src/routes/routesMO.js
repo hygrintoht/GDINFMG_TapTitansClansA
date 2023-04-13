@@ -275,6 +275,22 @@ router.get("/player/:username", (req, res) => {
     
 });
 
+router.get("/clan/:clanID/players", (req, res) => {
+
+    const clanID = req.params.clanID;
+
+    player.getPlayersFromClan(clanID, (err, results) => {
+        if (err) {
+            console.error(err);
+            res.status(500);
+            res.send("An error has occurred: " + err);
+            return;
+        }
+        res.json(results);
+    });
+    
+});
+
 
 // update
 router.patch("/player", (req, res) => {

@@ -41,10 +41,8 @@ public class CreateAccount : MonoBehaviour
 
 
         for(int i = 0; i < _submittedDataList.Count; i++)
-        {
             Debug.Log(_submittedDataList[i]);
-        }
-       
+
     }
 
     //TODO - SERVER-SIDE

@@ -35,7 +35,7 @@ CREATE TABLE IF NOT EXISTS player (
     skill_points_owned  int NOT NULL DEFAULT 0,
     play_time TIME,
     last_played DATETIME,
-    installation_date DATE NOT NULL,
+    installation_date DATETIME CURRENT_TIMESTAMP,
     CONSTRAINT `PK_playerID_key` PRIMARY KEY (playerID),
     CONSTRAINT `FK_clanID_in_player_key` FOREIGN KEY (clanID)
 		REFERENCES clan(clanID)

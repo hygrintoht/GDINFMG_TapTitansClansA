@@ -362,11 +362,9 @@ router.patch("/player", (req, res) => {
 });
 
 // delete
-router.delete("/player", (req, res) => {
+router.delete("/player/:playerID", (req, res) => {
 
-    const playerID = req.body.playerID;
-
-    player.deletePlayer(playerID, (err, results) => {
+    player.deletePlayer(req.params.playerID, (err, results) => {
         if (err) {
             console.error(err);
             res.status(500);

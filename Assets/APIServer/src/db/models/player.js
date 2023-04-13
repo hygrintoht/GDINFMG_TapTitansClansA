@@ -29,9 +29,17 @@ function getPlayerWithLimit(limit, callback){
 }
     // get player id from username
 function getPlayerID(name, callback){
+    console.log(name);
+
     let stmt = 'SELECT playerID FROM player WHERE username = ?';
     pool.execute(stmt, [name], callback);
 }
+
+function getPlayerStats(ID, callback){
+    let stmt = 'SELECT playerID, username, email, clanID, country, max_prestige_stage, artifacts_collected, crafting_power, total_pet_levels, skill_points_owned, play_time, last_played FROM player WHERE username = ?';
+    pool.execute(stmt, [ID], callback);
+}
+
 // update
     // general update function
 function updatePlayer(playerID, update_player, callback) {
@@ -39,6 +47,7 @@ function updatePlayer(playerID, update_player, callback) {
     // store the fields to update in an array, so that the list of fields are in order
     let update_fields = [];
     for (const prop in update_player) {
+        console.log(prop);
         const setStr = `${prop}=?,`;
         update_fields.push(update_player[prop]);
         stmt += setStr;
@@ -47,6 +56,9 @@ function updatePlayer(playerID, update_player, callback) {
     stmt = stmt.substring(0, stmt.length-1); 
     stmt += ` WHERE playerID = ?`;
     update_fields.push(playerID);
+
+    console.log(stmt);
+
     pool.execute(stmt, update_fields, callback);
 }
 // delete
@@ -62,5 +74,6 @@ module.exports = {
     getPlayerWithLimit,
     getPlayerID,
     updatePlayer,
-    deletePlayer
+    deletePlayer,
+    getPlayerStats
 };

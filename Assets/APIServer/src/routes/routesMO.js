@@ -244,10 +244,46 @@ router.post("/player", (req, res) => {
 
 });
 // read
+
+router.get("/player", (req, res) => {
+
+        player.getPlayer((err, results) => {
+            if (err) {
+                console.error(err);
+                res.status(500);
+                res.send("An error has occurred: " + err);
+                return;
+            }
+            res.json(results);
+        });
+    
+});
+
+router.get("/player/:username", (req, res) => {
+
+    const name = req.params.username;
+
+    player.getPlayerStats(name, (err, results) => {
+        if (err) {
+            console.error(err);
+            res.status(500);
+            res.send("An error has occurred: " + err);
+            return;
+        }
+        res.json(results);
+    });
+    
+});
+
+
 // update
 router.patch("/player", (req, res) => {
 
     const {playerID, updateVals} = req.body;
+
+    console.log(playerID);
+    console.log(req.body.playerID);
+    console.log(req.body.updateVals);
 
     player.updatePlayer(playerID, updateVals, (err, results) => {
         if (err) {
@@ -259,6 +295,7 @@ router.patch("/player", (req, res) => {
         res.json(results);
     });
 });
+
 // delete
 router.delete("/player", (req, res) => {
 

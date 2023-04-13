@@ -20,7 +20,7 @@ public class CreateAccount : MonoBehaviour
     [SerializeField] private TextMeshProUGUI country;
     [SerializeField] private TextMeshProUGUI title;
     
-    private List<String> _submittedDataList = new List<string>();
+    private List<string> _submittedDataList = new List<string>();
 
     private PersonalData _personalData;
 
@@ -34,6 +34,8 @@ public class CreateAccount : MonoBehaviour
         _submittedDataList.Add(password.text);
         _submittedDataList.Add(country.text);
         _submittedDataList.Add(title.text);
+        DateTime dateToday = DateTime.Now;
+        _submittedDataList.Add(dateToday.ToString("yyyy/MM/dd"));
         
         //upload to database
         UploadData();
@@ -48,7 +50,6 @@ public class CreateAccount : MonoBehaviour
 
     public void UploadData()
     {
-        //_submittedDataList[(int)PersonalData.Username];
-
+        ServerTalker.Instance.StartCoroutine(ServerTalker.Instance.CreatePlayer("/player", _submittedDataList));
     }
 }

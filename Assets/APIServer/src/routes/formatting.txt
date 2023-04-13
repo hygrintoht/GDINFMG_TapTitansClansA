@@ -1,0 +1,49 @@
+// update
+    // update clan
+    // general update funtion
+/* format(body) insert values needed, remove stuff if needed
+
+{
+    "clanID": 12345,
+    "updateVals":
+    [
+        {
+            "clan_name":            "",
+            "num_raids_completed":  ,
+            "num_clan_morale":      ,
+            "required_stage":       ,
+            "required_raid_level":  ,
+            "privacy":              ,
+        }
+    ]
+}
+
+*/
+
+// update
+    // general update funtion
+/* format(body) insert values needed, remove stuff if needed
+
+{
+    "playerID": 12345,
+    "updateVals":
+    [
+        {
+            "username":             "",
+            "email":                "",
+            "clanID":               ,
+            "country":              "",
+            "title":                "",
+            "max_prestige_stage":   ,
+            "artifacts_collected":  ,
+            "crafting_power":       ,
+            "total_pet_levels":     ,
+            "skill_points_owned":   ,
+            "play_time":            ,
+            "last_played":          ,
+            "installation_date":    ,
+        }
+    ]
+}
+
+*/ 

@@ -93,7 +93,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 72
+  m_fontSize: 18
   m_fontSizeBase: 99.38
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -147,8 +147,9 @@ GameObject:
   - component: {fileID: 4644361824464941360}
   - component: {fileID: 4644361824464941519}
   - component: {fileID: 4644361824464941518}
+  - component: {fileID: 406570293705479410}
   m_Layer: 5
-  m_Name: pf_ClanName
+  m_Name: ClanHolder
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -257,3 +258,24 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &406570293705479410
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4644361824464941516}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ab47ac54c5027a148aafb4c1db5a262a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  clanID: 0
+  clanInviteCode: 0
+  clanName: 
+  numRaidCompleted: 0
+  numClanMorale: 0
+  requiredStage: 0
+  requiredRaidLevel: 0
+  privacy: 
+  clanNameText: {fileID: 4644361823176593506}

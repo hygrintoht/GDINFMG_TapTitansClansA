@@ -12,6 +12,8 @@ public class ServerTalker : MonoBehaviour
     const string address = "localhost:3000";
     public string query;
 
+    [SerializeField] private ClanSearch clanSearch;
+
     private void Awake()
     {
         // If there is an instance, and it's not me, delete myself.
@@ -28,7 +30,10 @@ public class ServerTalker : MonoBehaviour
 
     private void Update()
     {
-        
+        if (Input.GetMouseButtonDown(0))
+        {
+            StartCoroutine(GetClans("/clan"));
+        }
     }
 
     //READ-GET
@@ -47,6 +52,24 @@ public class ServerTalker : MonoBehaviour
         else
         {
             Debug.Log(request.downloadHandler.text);
+        }
+    }
+
+    public IEnumerator GetClans(string query)
+    {
+        Debug.Log("Get all Clans");
+
+        UnityWebRequest request = UnityWebRequest.Get(address + query);
+        yield return request.SendWebRequest();
+
+        if (request.result != UnityWebRequest.Result.Success)
+        {
+            Debug.LogError("Something went wrong: " + request.error);
+        }
+        else
+        {
+            Debug.Log("Query Succesful");
+            clanSearch.ClanSearchSetup(request.downloadHandler.text);
         }
     }
 

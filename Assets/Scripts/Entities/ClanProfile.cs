@@ -111,19 +111,18 @@ public class ClanProfile : MonoBehaviour
             RaidScore raidScore = obj.GetComponent<RaidScore>();
             if (raidScore.playerID == UIManager.Instance.player.playerID)
             {
-                //Patch
+                return;
             }
-            else
-            {
-                //Create
-                List<int> data = new List<int>();
-                data.Add(raid.raidID);
-                data.Add(UIManager.Instance.player.playerID);
-                data.Add(1);
-                data.Add(Random.Range(1, 3));
-                StartCoroutine(ServerTalker.Instance.CreateRaidScore("/raid_score", data));
-            }
+ 
         }
+
+        //Create
+        List<int> data = new List<int>();
+        data.Add(raid.raidID);
+        data.Add(UIManager.Instance.player.playerID);
+        data.Add(1);
+        data.Add(Random.Range(1, 5));
+        StartCoroutine(ServerTalker.Instance.CreateRaidScore("/raid_score", data));
     }
 
     public void ClearRaidScores()

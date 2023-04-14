@@ -57,6 +57,7 @@ CREATE TABLE IF NOT EXISTS clan_leaders (
 CREATE TABLE IF NOT EXISTS clan_raid_events (
 	raidID int NOT NULL AUTO_INCREMENT,
     titan_name VARCHAR(30) NOT NULL,
+	titan_health int NOT NULL DEFAULT 60,
     clanID int NOT NULL,
     CONSTRAINT `PK_raidID_key` PRIMARY KEY (raidID),
     CONSTRAINT `FK_clanID_in_raid_events_key` FOREIGN KEY (clanID)
@@ -80,7 +81,7 @@ CREATE TABLE IF NOT EXISTS chat (
     clanID int NOT NULL,
     playerID int NOT NULL,
     message VARCHAR(200) NOT NULL,
-    messageDateTime DATETIME NOT NULL,
+    messageDateTime DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
     messageType ENUM('unknown', 'player_chat', 'raid_closed', 'raid_initiated', 'raid_active', 'clan_crate'),
     CONSTRAINT `PK_chatID_key` PRIMARY KEY (chatID),
     CONSTRAINT `FK_clanID_in_chat_key` FOREIGN KEY (clanID)

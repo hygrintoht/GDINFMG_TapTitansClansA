@@ -38,6 +38,17 @@ router.get("/", function (req, res) {
     res.send("<h1> Hello! </h1>");
 });
 
+function checkError(err, res){
+
+    if (err) {
+        console.error(err);
+        res.status(500);
+        res.send("An error has occurred: " + err);
+        return true;
+    }
+
+}
+
 //#region chat
 // create
     // create chat
@@ -287,6 +298,21 @@ router.get("/clan_raid_events/get_raid_id/:clanID", (req, res) => {
     });
 
 });
+
+router.get("/clan_raid_events/get_health/:clanID", (req, res) => {
+
+    clan_raid_events.getClan_Raid_EventHealth(req.params.clanID, (err, results) =>{
+        if (err) {
+            console.error(err);
+            res.status(500);
+            res.send("An error has occurred: " + err);
+            return;
+        }
+        res.json(results);
+    });
+
+});
+
 // update (not needed)
 // delete
 router.delete("/clan_raid_events/:raidID", (req, res) => {

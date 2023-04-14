@@ -23,10 +23,20 @@ public class ClanProfile : MonoBehaviour
     [SerializeField] private GameObject clanMemberPrefab;
     [SerializeField] private GameObject clanMemberContentTransform;
 
+    [Header("Clan Raid References")]
+    [SerializeField] private GameObject clanRaidPanel;
+    [SerializeField] private TMP_Text titanNameText;
+
+    [Header("Clan Raid Score")]
+    [SerializeField] private GameObject clanRaidScore;
+    [SerializeField] private GameObject clanRaidContentTransform;
+
     [Space(10)]
     public Clan clan;
     public ClanLeader leader;
+    public Raid raid;
     public List<GameObject> clanMembers = new List<GameObject>();
+    public List<GameObject> clanRaidScores = new List<GameObject>();
 
 
     public void JoinClan()
@@ -38,12 +48,94 @@ public class ClanProfile : MonoBehaviour
     {
         clanProfileTab.SetActive(true);
         clanMembersPanel.SetActive(false);
+        clanRaidPanel.SetActive(false);
     }
 
     public void OpenClanMembers()
     {
         clanMembersPanel.SetActive(true);
         clanProfileTab.SetActive(false);
+        clanRaidPanel.SetActive(false);
+
+    }
+
+    public void OpenClanRaids()
+    {
+        clanMembersPanel.SetActive(false);
+        clanProfileTab.SetActive(false);
+        clanRaidPanel.SetActive(true);
+    }
+
+    public void SetupRaid()
+    {
+        titanNameText.text = raid.titanName;
+
+        StartCoroutine(ServerTalker.Instance.GetRaidScores("/raid_score", raid.raidID));
+    }
+
+    public void SetupRaidScore(string rawResponse)
+    {
+        ClearRaidScores();
+
+        JSONNode node = JSON.Parse(rawResponse);
+        Debug.Log(node);
+        Debug.Log(node.Count);
+        Debug.Log(node[0].Count);
+
+        for (int i = 0; i < node.Count; i++)
+        {
+            GameObject clone = Instantiate(clanRaidScore, transform.position, Quaternion.identity, clanRaidContentTransform.transform);
+            clanRaidScores.Add(clone);
+
+            RaidScore raidScore = clone.GetComponent<RaidScore>();
+
+            foreach (GameObject obj in clanMembers)
+            {
+                Player player = obj.GetComponent<Player>();
+                if (player.playerID == node[i][1])
+                {
+                    raidScore.playerID = node[i][1];
+                    raidScore.username = player.username;
+                }
+            }
+            raidScore.raidID = node[i][0];
+            raidScore.attacks = node[i][2];
+            raidScore.damage = node[i][3];
+
+            raidScore.AssignHolderText();
+        }
+    }
+
+    public void AttackRaid()
+    {
+        foreach (GameObject obj in clanRaidScores)
+        {
+            RaidScore raidScore = obj.GetComponent<RaidScore>();
+            if (raidScore.playerID == UIManager.Instance.player.playerID)
+            {
+                //Patch
+            }
+            else
+            {
+                //Create
+                List<int> data = new List<int>();
+                data.Add(raid.raidID);
+                data.Add(UIManager.Instance.player.playerID);
+                data.Add(1);
+                data.Add(Random.Range(1, 3));
+                StartCoroutine(ServerTalker.Instance.CreateRaidScore("/raid_score", data));
+            }
+        }
+    }
+
+    public void ClearRaidScores()
+    {
+        foreach (GameObject obj in clanRaidScores)
+        {
+            Destroy(obj);
+        }
+
+        clanRaidScores.Clear();
     }
 
     public void SetupClanStats()

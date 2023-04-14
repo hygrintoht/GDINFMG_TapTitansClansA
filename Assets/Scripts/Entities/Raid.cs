@@ -17,4 +17,5 @@ public class Raid : MonoBehaviour
         //raidIDText.text = raidID.ToString(); // get statement from nodejs only returns raidID
         titanNameText.text = titanName;
     }
+
 }

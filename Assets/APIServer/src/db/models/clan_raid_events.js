@@ -20,7 +20,7 @@ function getClan_Raid_Events(callback){
 }
     // get latest raid event id from a given clan id
 function getClan_Raid_EventsID(clanID, callback){
-    let stmt = 'SELECT raidID, titan_name FROM clan_raid_event WHERE clanID = ? ORDER BY raidID DESC LIMIT 1';
+    let stmt = 'SELECT raidID, titan_name, titan_health FROM clan_raid_event WHERE clanID = ? ORDER BY raidID DESC LIMIT 1';
     pool.execute(stmt, [clanID], callback);
 }
 // update(not needed)

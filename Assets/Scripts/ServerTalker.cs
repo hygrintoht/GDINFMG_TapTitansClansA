@@ -94,7 +94,7 @@ public class ServerTalker : MonoBehaviour
         else
         {
             Debug.Log(request.downloadHandler.text);
-            UIManager.Instance.ProcessMyLeader(request.downloadHandler.text);
+            //UIManager.Instance.ProcessMyLeader(request.downloadHandler.text);
         }
 
         request.Dispose();
@@ -195,7 +195,7 @@ public class ServerTalker : MonoBehaviour
         else
         {
             Debug.Log("Query Succesful");
-            UIManager.Instance.raidsList.SetupRaidsList(request.downloadHandler.text);
+      
         }
 
         request.Dispose();

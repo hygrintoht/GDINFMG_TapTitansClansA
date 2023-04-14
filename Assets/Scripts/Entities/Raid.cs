@@ -7,6 +7,8 @@ public class Raid : MonoBehaviour
 {
     public int raidID;
     public string titanName;
+    public int titanHealth;
+    public int titanCurrentHealth;
     public int clanID;
 
     [SerializeField] TMP_Text raidIDText;

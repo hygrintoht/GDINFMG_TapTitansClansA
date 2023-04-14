@@ -299,6 +299,7 @@ router.get("/clan_raid_events/get_raid_id/:clanID", (req, res) => {
 
 });
 
+/*
 router.get("/clan_raid_events/get_health/:clanID", (req, res) => {
 
     clan_raid_events.getClan_Raid_EventHealth(req.params.clanID, (err, results) =>{
@@ -312,7 +313,7 @@ router.get("/clan_raid_events/get_health/:clanID", (req, res) => {
     });
 
 });
-
+*/
 // update (not needed)
 // delete
 router.delete("/clan_raid_events/:raidID", (req, res) => {

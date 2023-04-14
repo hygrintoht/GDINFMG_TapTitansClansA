@@ -51,6 +51,18 @@ public class UIManager : MonoBehaviour
         clanProfile.SetupClanStats();
         
         StartCoroutine(ServerTalker.Instance.GetPlayersFromClan("/clan", clan.clanID));
+        StartCoroutine(ServerTalker.Instance.GetRaidByClanID("/clan_raid_events/get_raid_id", clan.clanID));
+       
+
+    }
+
+    public void ProcessRaid(string rawResponse)
+    {
+        JSONNode node = JSON.Parse(rawResponse);
+        clanProfile.raid.raidID = node[0][0];
+        clanProfile.raid.titanName = node[0][1];
+
+        clanProfile.SetupRaid();
 
     }
 
@@ -71,6 +83,7 @@ public class UIManager : MonoBehaviour
         clanProfile.clan = clan;
         clanProfile.SetupClanStats();
         StartCoroutine(ServerTalker.Instance.GetPlayersFromClan("/clan", clan.clanID));
+        StartCoroutine(ServerTalker.Instance.GetRaidByClanID("/clan_raid_events/get_raid_id", clan.clanID));
 
     }
 
@@ -93,6 +106,8 @@ public class UIManager : MonoBehaviour
         clan.clanID = otherClan.clanID;
 
     }
+
+    
 
     public void OpenMyClan()
     {

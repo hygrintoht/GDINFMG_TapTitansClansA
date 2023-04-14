@@ -27,6 +27,43 @@ public class ServerTalker : MonoBehaviour
     }
 
     //READ-GET
+
+    public IEnumerator GetRaidByClanID(string query, int ID)
+    {
+        UnityWebRequest request = UnityWebRequest.Get(address + query + "/" + ID.ToString());
+        yield return request.SendWebRequest();
+
+        if (request.result != UnityWebRequest.Result.Success)
+        {
+            Debug.LogError("Something went wrong: " + request.error);
+        }
+        else
+        {
+            Debug.Log("RaidID" + request.downloadHandler.text);
+            UIManager.Instance.ProcessRaid(request.downloadHandler.text);
+        }
+
+        request.Dispose();
+    }
+
+    public IEnumerator GetRaidScores(string query, int ID)
+    {
+        UnityWebRequest request = UnityWebRequest.Get(address + query + "/" + ID.ToString());
+        yield return request.SendWebRequest();
+
+        if (request.result != UnityWebRequest.Result.Success)
+        {
+            Debug.LogError("Something went wrong: " + request.error);
+        }
+        else
+        {
+            Debug.Log("RaidID" + request.downloadHandler.text);
+            UIManager.Instance.clanProfile.SetupRaidScore(request.downloadHandler.text);
+        }
+
+        request.Dispose();
+    }
+
     public IEnumerator GetClanByID(string query, int ID)
     {
         UnityWebRequest request = UnityWebRequest.Get(address + query + "/" + ID.ToString());
@@ -190,6 +227,39 @@ public class ServerTalker : MonoBehaviour
         {
             Debug.Log("Form upload complete!");
             UIManager.Instance.CloseClanCreatePanel();
+        }
+
+        request.Dispose();
+    }
+
+    //CreateRaidScore
+    public IEnumerator CreateRaidScore(string query, List<int> submittedData)
+    {
+        JSONObject body = new JSONObject();
+        body.Add("raidId", submittedData[0]);
+        body.Add("playerID", submittedData[1]);
+        body.Add("attacks", submittedData[2]);
+        body.Add("damage", submittedData[3]);
+
+        Debug.Log(body);
+
+        byte[] requestData = Encoding.UTF8.GetBytes(body.ToString());
+
+        UnityWebRequest request = UnityWebRequest.Post(address + query, body.ToString());
+        request.SetRequestHeader("Content-Type", "application/json");
+        request.uploadHandler = new UploadHandlerRaw(requestData);
+        request.downloadHandler = new DownloadHandlerBuffer();
+
+        yield return request.SendWebRequest();
+
+        if (request.result != UnityWebRequest.Result.Success)
+        {
+            Debug.Log(request.error);
+        }
+        else
+        {
+            Debug.Log("Form upload complete!");
+            //process
         }
 
         request.Dispose();

@@ -1536,11 +1536,13 @@ MonoBehaviour:
   clan: {fileID: 602398679}
   clanSearch: {fileID: 602398675}
   clanProfile: {fileID: 1229242047556365722}
+  raidsList: {fileID: 0}
   profilePanel: {fileID: 4237642897065781938}
   profileCreatePanel: {fileID: 5347954666745459300}
   clanSearchPanel: {fileID: 932171385970984262}
   clanCreatePanel: {fileID: 834394081}
   clanProfilePanel: {fileID: 1229242047556365721}
+  raidsListPanel: {fileID: 0}
 --- !u!4 &602398674
 Transform:
   m_ObjectHideFlags: 0

@@ -26,6 +26,7 @@ public class UIManager : MonoBehaviour
     public Clan clan;
     public ClanSearch clanSearch;
     public ClanProfile clanProfile;
+    public RaidsList raidsList;
 
     [Header("Panels")]
     [SerializeField] private GameObject profilePanel;
@@ -33,6 +34,7 @@ public class UIManager : MonoBehaviour
     [SerializeField] private GameObject clanSearchPanel;
     [SerializeField] private GameObject clanCreatePanel;
     [SerializeField] private GameObject clanProfilePanel;
+    [SerializeField] private GameObject raidsListPanel;
 
     public void Start()
     {
@@ -42,6 +44,7 @@ public class UIManager : MonoBehaviour
         clanSearchPanel.SetActive(false);
         clanCreatePanel.SetActive(false);
         clanProfilePanel.SetActive(false);
+        raidsListPanel.SetActive(false);
     }
     public void OpenClanProfile(Clan clan)
     {
@@ -52,6 +55,12 @@ public class UIManager : MonoBehaviour
         
         StartCoroutine(ServerTalker.Instance.GetPlayersFromClan("/clan", clan.clanID));
 
+    }
+
+    public void ProcessMyLeader(string rawResponse)
+    {
+        JSONNode node = JSON.Parse(rawResponse);
+        clanProfile.leader.leaderName = node[0][0].ToString();
     }
 
     public void ProcessMyClan(string rawResponse)
@@ -102,6 +111,7 @@ public class UIManager : MonoBehaviour
             return;
         }
 
+        StartCoroutine(ServerTalker.Instance.GetClanLeaderWithClanID("/clan_leaders/get_clan_leaders", clan.clanID));
         StartCoroutine(ServerTalker.Instance.GetClanByID("/clan", clan.clanID));
 
     }
@@ -187,6 +197,16 @@ public class UIManager : MonoBehaviour
         this.player.skillPointsOwned = player.skillPointsOwned;
 
         player.AssignPlayerText();
+    }
+
+    public void OpenRaidsList()
+    {
+        raidsListPanel.SetActive(true);
+    }
+
+    public void CloseRaidsList()
+    {
+        raidsListPanel.SetActive(false);
     }
 
     public void CloseProfileCreatePanel()

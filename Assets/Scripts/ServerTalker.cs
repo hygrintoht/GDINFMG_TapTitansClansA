@@ -34,12 +34,30 @@ public class ServerTalker : MonoBehaviour
 
         if (request.result != UnityWebRequest.Result.Success)
         {
-            Debug.LogError("Something went wrong: " + request.error);
+            Debug.LogError("(Clan) Something went wrong: " + request.error);
         }
         else
         {
             Debug.Log(request.downloadHandler.text);
             UIManager.Instance.ProcessMyClan(request.downloadHandler.text);
+        }
+
+        request.Dispose();
+    }
+
+    public IEnumerator GetClanLeaderWithClanID(string query, int ID)
+    {
+        UnityWebRequest request = UnityWebRequest.Get(address + query + "/" + ID.ToString());
+        yield return request.SendWebRequest();
+
+        if (request.result != UnityWebRequest.Result.Success)
+        {
+            Debug.LogError("(Leader) Something went wrong: " + request.error);
+        }
+        else
+        {
+            Debug.Log(request.downloadHandler.text);
+            UIManager.Instance.ProcessMyLeader(request.downloadHandler.text);
         }
 
         request.Dispose();
@@ -123,6 +141,24 @@ public class ServerTalker : MonoBehaviour
         {
             Debug.Log("Query Succesful");
             UIManager.Instance.clanSearch.ClanSearchSetup(request.downloadHandler.text);
+        }
+
+        request.Dispose();
+    }
+
+    public IEnumerator GetRaidsList(string query, int ID)
+    {
+        UnityWebRequest request = UnityWebRequest.Get(address + query + "/" + ID.ToString());
+        yield return request.SendWebRequest();
+
+        if (request.result != UnityWebRequest.Result.Success)
+        {
+            Debug.LogError("(Raids) Something went wrong: " + request.error);
+        }
+        else
+        {
+            Debug.Log("Query Succesful");
+            UIManager.Instance.raidsList.SetupRaidsList(request.downloadHandler.text);
         }
 
         request.Dispose();

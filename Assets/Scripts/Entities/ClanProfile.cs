@@ -8,6 +8,7 @@ public class ClanProfile : MonoBehaviour
 {
     [Header("Clan Profile References")]
     [SerializeField] private GameObject clanProfileTab;
+    [SerializeField] private TMP_Text clanLeaderText;
     [SerializeField] private TMP_Text clanIDText;
     [SerializeField] private TMP_Text clanNameText;
     [SerializeField] private TMP_Text inviteCode;
@@ -24,6 +25,7 @@ public class ClanProfile : MonoBehaviour
 
     [Space(10)]
     public Clan clan;
+    public ClanLeader leader;
     public List<GameObject> clanMembers = new List<GameObject>();
 
 
@@ -49,6 +51,7 @@ public class ClanProfile : MonoBehaviour
         clanProfileTab.SetActive(true);
         clanMembersPanel.SetActive(false);
 
+        clanLeaderText.text = leader.leaderName;
         clanIDText.text = clan.clanID.ToString();
         clanNameText.text = clan.clanName;
         inviteCode.text = clan.clanInviteCode.ToString();
@@ -77,7 +80,7 @@ public class ClanProfile : MonoBehaviour
             player.playerID = node[i][0];
             player.username = node[i][1];
             player.email = node[i][2];
-            player.clanID = node[i][3];
+            //player.clanID = node[i][3];
             player.country = node[i][4];
             player.maxPrestigeStage = node[i][5];
             player.artifactsCollected = node[i][6];

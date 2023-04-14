@@ -17,7 +17,8 @@ function createClan_Leaders(clan_leaders, callback)
 // read
     // gets clan leaders based on clan id
 function getClan_LeadersInClan(clanID, callback){
-    let stmt = 'SELECT * FROM clan_leader WHERE clanID = ?';
+    //let stmt = 'SELECT * FROM clan_leader WHERE clanID = ?';
+    let stmt = 'SELECT player.username FROM clan_leader INNER JOIN player ON player.playerID = clan_leader.playerID WHERE clan_leader.clanID = ?';
     pool.execute(stmt, [clanID], callback); 
 }
 // update
